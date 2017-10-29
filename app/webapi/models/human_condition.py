@@ -13,6 +13,7 @@ class HumanCondition():
             "heart": self.heart,
             "steps": self.steps,
             "distance": self.distance,
+            "calories": self.calories,
             "name": self.name,
             "time": self.time
         }
@@ -34,6 +35,11 @@ class HumanCondition():
                 "name": "distance",
                 "friendly_name": "distance",
                 "type": "float"
+            },
+            {
+                "name": "calories",
+                "friendly_name": "calories",
+                "type": "int"
             },
             {
                 "name": "name",
