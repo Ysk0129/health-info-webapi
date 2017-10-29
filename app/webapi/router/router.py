@@ -10,50 +10,58 @@ from webapi.models.room_conditions import RoomConditions
 from webapi.models.human_condition import HumanCondition
 from webapi.models.human_conditions import HumanConditions
 
-@app.route("/getroomcondition", methods=["POST"])
+@app.route("/getroomcondition", methods=["GET"])
 def getroomcondition():
+
+    if request.args.get("name") == None:
+        return jsonify({"result": "failed"})
+
     r = RoomConditionConnector()
 
-    if "startdate" in request.form.keys() and "enddate" in request.form.keys():
-        startdate = datetime.strptime(request.form["startdate"], "%Y-%m-%d %H:%M:%S")
-        enddate = datetime.strptime(request.form["startdate"], "%Y-%m-%d %H:%M:%S")
-        data = r.select_room_condition(name=request.form["name"], startdate=startdate, enddate=enddate)
+    if request.args.get("startdate") != None and request.args.get("enddate") != None:
+        startdate = datetime.strptime(request.args["startdate"], "%Y-%m-%d %H:%M:%S")
+        enddate = datetime.strptime(request.args["startdate"], "%Y-%m-%d %H:%M:%S")
+        data = r.select_room_condition(name=request.args["name"], startdate=startdate, enddate=enddate)
         room_conditions = RoomConditions([RoomCondition(d[0], d[1], d[2], d[3]) for d in data])
         result = room_conditions.get_all_dict()
         return jsonify(result)
 
-    if "startdate" in request.form.keys():
-        startdate = datetime.strptime(request.form["startdate"], "%Y-%m-%d %H:%M:%S")
-        data = r.select_room_condition(name=request.form["name"], startdate=startdate)
+    if request.args.get("startdate") != None:
+        startdate = datetime.strptime(request.args["startdate"], "%Y-%m-%d %H:%M:%S")
+        data = r.select_room_condition(name=request.args["name"], startdate=startdate)
         room_conditions = RoomConditions([RoomCondition(d[0], d[1], d[2], d[3]) for d in data])
         result = room_conditions.get_all_dict()
         return jsonify(result)
 
-    data = r.select_room_condition(name=request.form["name"])
+    data = r.select_room_condition(name=request.args["name"])
     room_conditions = RoomConditions([RoomCondition(d[0], d[1], d[2], d[3]) for d in data])
     result = room_conditions.get_all_dict()
     return jsonify(result)
 
-@app.route("/gethumancondition", methods=["POST"])
+@app.route("/gethumancondition", methods=["GET"])
 def gethumancondition():
+
+    if request.args.get("name") == None:
+        return jsonify({"result": "failed"})
+
     h = HumanConditionConnector()
 
-    if "startdate" in request.form.keys() and "enddate" in request.form.keys():
-        startdate = datetime.strptime(request.form["startdate"], "%Y-%m-%d %H:%M:%S")
-        enddate = datetime.strptime(request.form["startdate"], "%Y-%m-%d %H:%M:%S")
-        data = h.select_human_condition(name=request.form["name"], startdate=startdate, enddate=enddate)
+    if request.args.get("startdate") != None and request.args.get("enddate") != None:
+        startdate = datetime.strptime(request.args["startdate"], "%Y-%m-%d %H:%M:%S")
+        enddate = datetime.strptime(request.args["startdate"], "%Y-%m-%d %H:%M:%S")
+        data = h.select_human_condition(name=request.args["name"], startdate=startdate, enddate=enddate)
         human_conditions = HumanConditions([HumanCondition(d[0], d[1], d[2], d[3], d[4], d[5]) for d in data])
         result = human_conditions.get_all_dict()
         return jsonify(result)
 
-    if "startdate" in request.form.keys():
-        startdate = datetime.strptime(request.form["startdate"], "%Y-%m-%d %H:%M:%S")
-        data = h.select_human_condition(name=request.form["name"], startdate=startdate)
+    if request.args.get("startdate") != None:
+        startdate = datetime.strptime(request.args["startdate"], "%Y-%m-%d %H:%M:%S")
+        data = h.select_human_condition(name=request.args["name"], startdate=startdate)
         human_conditions = HumanConditions([HumanCondition(d[0], d[1], d[2], d[3], d[4], d[5]) for d in data])
         result = human_conditions.get_all_dict()
         return jsonify(result)
 
-    data = h.select_human_condition(name=request.form["name"])
+    data = h.select_human_condition(name=request.args["name"])
     human_conditions = HumanConditions([HumanCondition(d[0], d[1], d[2], d[3], d[4], d[5]) for d in data])
     result = human_conditions.get_all_dict()
     return jsonify(result)
