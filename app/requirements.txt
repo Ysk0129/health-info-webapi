@@ -1,4 +1,4 @@
 flask
 uwsgi
 requests
-MySQL-python
+mysql-connector-python-rf
