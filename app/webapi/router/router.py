@@ -22,19 +22,19 @@ def getroomcondition():
         startdate = datetime.strptime(request.args["startdate"], "%Y-%m-%d %H:%M:%S")
         enddate = datetime.strptime(request.args["startdate"], "%Y-%m-%d %H:%M:%S")
         data = r.select_room_condition(name=request.args["name"], startdate=startdate, enddate=enddate)
-        room_conditions = RoomConditions([RoomCondition(d[0], d[1], d[2], d[3]) for d in data])
+        room_conditions = RoomConditions([RoomCondition(d[0], d[1], d[2], d[3].strftime("%Y-%m-%d %H:%M")) for d in data])
         result = room_conditions.get_all_dict()
         return jsonify(result)
 
     if request.args.get("startdate") != None:
         startdate = datetime.strptime(request.args["startdate"], "%Y-%m-%d %H:%M:%S")
         data = r.select_room_condition(name=request.args["name"], startdate=startdate)
-        room_conditions = RoomConditions([RoomCondition(d[0], d[1], d[2], d[3]) for d in data])
+        room_conditions = RoomConditions([RoomCondition(d[0], d[1], d[2], d[3].strftime("%Y-%m-%d %H:%M")) for d in data])
         result = room_conditions.get_all_dict()
         return jsonify(result)
 
     data = r.select_room_condition(name=request.args["name"])
-    room_conditions = RoomConditions([RoomCondition(d[0], d[1], d[2], d[3]) for d in data])
+    room_conditions = RoomConditions([RoomCondition(d[0], d[1], d[2], d[3].strftime("%Y-%m-%d %H:%M")) for d in data])
     result = room_conditions.get_all_dict()
     return jsonify(result)
 
@@ -50,19 +50,19 @@ def gethumancondition():
         startdate = datetime.strptime(request.args["startdate"], "%Y-%m-%d %H:%M:%S")
         enddate = datetime.strptime(request.args["startdate"], "%Y-%m-%d %H:%M:%S")
         data = h.select_human_condition(name=request.args["name"], startdate=startdate, enddate=enddate)
-        human_conditions = HumanConditions([HumanCondition(d[0], d[1], d[2], d[3], d[4], d[5]) for d in data])
+        human_conditions = HumanConditions([HumanCondition(d[0], d[1], d[2], d[3], d[4], d[5].strftime("%Y-%m-%d %H:%M")) for d in data])
         result = human_conditions.get_all_dict()
         return jsonify(result)
 
     if request.args.get("startdate") != None:
         startdate = datetime.strptime(request.args["startdate"], "%Y-%m-%d %H:%M:%S")
         data = h.select_human_condition(name=request.args["name"], startdate=startdate)
-        human_conditions = HumanConditions([HumanCondition(d[0], d[1], d[2], d[3], d[4], d[5]) for d in data])
+        human_conditions = HumanConditions([HumanCondition(d[0], d[1], d[2], d[3], d[4], d[5].strftime("%Y-%m-%d %H:%M")) for d in data])
         result = human_conditions.get_all_dict()
         return jsonify(result)
 
     data = h.select_human_condition(name=request.args["name"])
-    human_conditions = HumanConditions([HumanCondition(d[0], d[1], d[2], d[3], d[4], d[5]) for d in data])
+    human_conditions = HumanConditions([HumanCondition(d[0], d[1], d[2], d[3], d[4], d[5].strftime("%Y-%m-%d %H:%M")) for d in data])
     result = human_conditions.get_all_dict()
     return jsonify(result)
 
