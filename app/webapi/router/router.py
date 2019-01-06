@@ -10,7 +10,7 @@ from webapi.models.room_conditions import RoomConditions
 from webapi.models.human_condition import HumanCondition
 from webapi.models.human_conditions import HumanConditions
 
-@app.route("/getroomcondition", methods=["GET"])
+@app.route("/room/condition", methods=["GET"])
 def getroomcondition():
 
     if request.args.get("name") == None:
@@ -38,7 +38,7 @@ def getroomcondition():
     result = room_conditions.get_all_dict()
     return jsonify(result)
 
-@app.route("/gethumancondition", methods=["GET"])
+@app.route("/human/condition", methods=["GET"])
 def gethumancondition():
 
     if request.args.get("name") == None:
@@ -66,7 +66,7 @@ def gethumancondition():
     result = human_conditions.get_all_dict()
     return jsonify(result)
 
-@app.route("/registeruser", methods=["POST"])
+@app.route("/user", methods=["POST"])
 def registeruser():
     u = UserConnector()
     u.insert_user(name=request.form["name"])
@@ -74,7 +74,7 @@ def registeruser():
     data = u.select_user(name=request.form["name"])
     return jsonify(data)
 
-@app.route("/postroomcondition", methods=["POST"])
+@app.route("/room/condition", methods=["POST"])
 def postroomcondition():
     r = RoomConditionConnector()
 
@@ -85,7 +85,7 @@ def postroomcondition():
 
     return jsonify([{"result": "success"}])
 
-@app.route("/posthumancondition", methods=["POST"])
+@app.route("/human/condition", methods=["POST"])
 def posthumancondition():
     h = HumanConditionConnector()
     if "heart" in request.form.keys() and "steps" in request.form.keys() and "distance" in request.form.keys() and request.form.keys():
